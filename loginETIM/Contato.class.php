@@ -52,16 +52,43 @@ class Contato{
         try {
             $this->pdo = new PDO($dsn, $dbUser, $dbPass);
 
-            echo "<script>
-                    alert('Conectado ao banco')
-                 </script>";
+            /* echo "<script>
+                   alert('Conectado ao banco')
+                </script>";*/
 
         } catch (\Throwable $th) {
             echo "<script>
-                    alert('Banco indisponivel, tente mais tarde!')
+                    alert(`Banco indisponivel, tente mais tarde!`)
                  </script>";
+            // echo $th;
         }
     }
        
+    function insertUser($nome,$email,$senha){
+        //passo 1  cria uam variavel com a consulta SQL
+        $sql = "INSERT INTO usuarios SET nome = :n, email = :e, senha =:s;";
 
+        //passo 2 quando tem apelidos temos que usar o metodo prepare
+        $sql = $this->pdo->prepare($sql);
+
+        //passo 3 depois do prepare usar o bindValue, um pra cada apelido
+        $sql->bindValue(":n",$nome);
+        $sql->bindValue(":e",$email);
+        $sql->bindValue(":s",$senha);
+
+        //passo 4 executar o comando
+        return $sql->execute();
+    }
+
+    function insertAtvd($nome,$idade,$celular){
+        $atvd = "INSERT INTO atividade SET nome = :nm, idade = :y, celular = :cll";
+
+        $atvd = $this->pdo->prepare($atvd);
+
+        $atvd->bindValue(":nm",$nome);
+        $atvd->bindValue(":cll",$celular);
+        $atvd->bindValue(":y",$idade);
+
+        return $atvd->execute();
+    }
 }
