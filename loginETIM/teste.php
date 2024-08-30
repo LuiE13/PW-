@@ -3,6 +3,12 @@ include 'Contato.class.php';
 
 $contato = new Contato();
 
-$contato->insertAtvd("withorya", 24, "11988937777");
+$resultado = $contato->insertUser($_POST["nome"],$_POST[ "email"], $_POST["senha"]);
+if($resultado == true) {
+     echo"
+     <script>
+         alert('Registro inserido com sucesso')
+     </script>";    
+}
 
 
