@@ -3,12 +3,13 @@ include 'Contato.class.php';
 
 $contato = new Contato();
 
-$resultado = $contato->insertUser($_POST["nome"],$_POST[ "email"], $_POST["senha"]);
-if($resultado == true) {
-     echo"
-     <script>
-         alert('Registro inserido com sucesso')
-     </script>";    
+$resultado = $contato->checkUser("fabioclaret@gmail.com");
+if(!empty($resultado) ){
+    echo "
+    <script>
+        alert('Usuario ja cadastrado')
+    </script>";
+}else{
+    $contato->insertUser("nome" , "fabioclaret@gmail.com" , "senha");
 }
-
 
